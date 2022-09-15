@@ -30,7 +30,7 @@ public class MovieController {
 
   public MovieController(){
     this.movieService = new MovieService();
-  }
+  } //denne klasse laves i main
 
   //hvid pil - komposition
   //sort pil - aggregation - klasse findes kun hvis en anden findes
@@ -46,7 +46,8 @@ public class MovieController {
     return movieService.getFirst(); //ingen argumenter i controller, ingen logik
   } //skal returnere datatype Movie til brugeren
 
-  @GetMapping("/random")
+  @GetMapping("/random") //normalt giv endpoint samme ("/random") samme navn som metoden
+  //men gør hvad der giver mening
   public Movie getRandom(){
     return movieService.getRandom();
   }
@@ -59,7 +60,10 @@ public class MovieController {
     return "Movies that won an award: " + movieService.getHowManyWonAnAward();
   }
   @GetMapping("/filter") //skriv localhost:8080/filter?x=x&n=n
-  public List<Movie> printMoviesWithCertainCharacters(char x, int n){
+  public List<Movie> printMoviesWithCertainCharacters(char x, int n, int xxx){
+    //man behøver ikke skrive @RequestParam
+    //man skal skrive alle parametre ind i urlen, selv hvis de ikke bruges^^
+    //bliver localhost:8080/filter?x=x&n=n&xxx=et_tal
     return movieService.printMoviesWithCertainCharacters(x, n);
   }
   @GetMapping("/longest") //skriv localhost:8080/longest?g1=drama&g2=westerns
@@ -72,4 +76,6 @@ public class MovieController {
     return movieService.testSorting();
   }
 
+  //claus har installeret et browser plugin som viser de her udprintede arrays af film som json
+  //så det vises pænt
 }
