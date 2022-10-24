@@ -1,36 +1,37 @@
 package com.example.moviefactsworkshop.services;
 
 import com.example.moviefactsworkshop.models.Movie;
-import com.example.moviefactsworkshop.repositories.MovieRepository;
+import com.example.moviefactsworkshop.repositories.MovieRepositoryCSV;
+import com.example.moviefactsworkshop.repositories.MovieRepositoryDatabase;
 
 import java.util.*;
 
 public class MovieService{
-  private MovieRepository movieRepository; //dependency injecte - at dette objekt laves et andet sted og smides
+  private MovieRepositoryCSV movieRepositoryCSV; //dependency injecte - at dette objekt laves et andet sted og smides
   //ind her. Gøres ikke her
-
   public MovieService(){
-    this.movieRepository = new MovieRepository();
+    this.movieRepositoryCSV = new MovieRepositoryCSV();
   }
 
+
   public Movie getFirst(){
-    return movieRepository.getOne(0); //hvor sættes hvis ikke hardcoded
+    return movieRepositoryCSV.getOne(0); //hvor sættes hvis ikke hardcoded
   }
 
   public Movie getRandom() {
-    int length = movieRepository.getMovies().size();
+    int length = movieRepositoryCSV.getMovies().size();
     Random random = new Random();
     int index = random.nextInt(0, length);
-    return movieRepository.getRandom(index);
+    return movieRepositoryCSV.getRandom(index);
   }
 
   public List<Movie> getTenSortByPopularity() {
-    int length = movieRepository.getMovies().size();
+    int length = movieRepositoryCSV.getMovies().size();
     Random random = new Random();
     List<Movie> tenMovies = new ArrayList<>();
     for (int i=0; i<10; i++){
       int index = random.nextInt(0, length);
-      tenMovies.add(i, movieRepository.getRandom(index));
+      tenMovies.add(i, movieRepositoryCSV.getRandom(index));
     }
     //sort
     Collections.sort(tenMovies, new SortPopularity()); //fordi popularity er en string
@@ -42,7 +43,7 @@ public class MovieService{
 
   public int getHowManyWonAnAward() {
     int awardCount = 0;
-    for (Movie m : movieRepository.getMovies()){
+    for (Movie m : movieRepositoryCSV.getMovies()){
       if (m.getAwards().equalsIgnoreCase("yes")){
         awardCount++;
       }
@@ -53,7 +54,7 @@ public class MovieService{
   public List<Movie> printMoviesWithCertainCharacters(char x, int n) {
     List<Movie> movies = new ArrayList<>();
 
-    for (Movie m : movieRepository.getMovies()){
+    for (Movie m : movieRepositoryCSV.getMovies()){
 
       if (m.getTitle().contains(""+x)){
         char[] title = m.getTitle().toCharArray();
@@ -94,8 +95,8 @@ public class MovieService{
     if (genre.equalsIgnoreCase("sciencefiction")){
       genre = "science fiction"; //gøres fordi man taster ind uden mellemrum men i filen er der mellemrum
     }
-    Collections.sort(movieRepository.getMovies(), new SortLength());
-    for (Movie m : movieRepository.getMovies()){
+    Collections.sort(movieRepositoryCSV.getMovies(), new SortLength());
+    for (Movie m : movieRepositoryCSV.getMovies()){
       if (m.getSubject().equalsIgnoreCase(genre)){
         return m.getLength(); //returnere det første objekt den rammer med den specificerede
         //genre, hvilket bør være den med længst længde efter Comparator

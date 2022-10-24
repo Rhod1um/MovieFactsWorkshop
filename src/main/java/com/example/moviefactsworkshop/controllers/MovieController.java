@@ -1,6 +1,8 @@
 package com.example.moviefactsworkshop.controllers;
 
 import com.example.moviefactsworkshop.models.Movie;
+import com.example.moviefactsworkshop.models.Movie2;
+import com.example.moviefactsworkshop.repositories.MovieRepositoryDatabase;
 import com.example.moviefactsworkshop.services.MovieService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +29,13 @@ public class MovieController {
   //endpoint: en url man kan gå ind på
 
   private MovieService movieService;
+  private MovieRepositoryDatabase movieRepositoryDatabase;
 
   public MovieController(){
     this.movieService = new MovieService();
+    this.movieRepositoryDatabase = new MovieRepositoryDatabase();
   } //denne klasse laves i main
 
-  //hvid pil - komposition
-  //sort pil - aggregation - klasse findes kun hvis en anden findes
 
   //exercise 2
   @GetMapping("/getfirst")
@@ -78,4 +80,11 @@ public class MovieController {
 
   //claus har installeret et browser plugin som viser de her udprintede arrays af film som json
   //så det vises pænt
+
+  //test database, tag alle movies fra database:
+  @GetMapping("database")
+  public List<Movie2> testDatabase(){
+    return movieRepositoryDatabase.getAllMovies();
+  }
 }
+

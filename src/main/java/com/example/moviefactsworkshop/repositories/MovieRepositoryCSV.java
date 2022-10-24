@@ -6,10 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
-public class MovieRepository { //klasser under repository kaldes noget med repository
+public class MovieRepositoryCSV { //klasser under repository kaldes noget med repository
   //henter data fra egen lavet directory ressoruces i roden hvor csv filen af film er lagt
   //kunne ligge alle mulige andre steder men nu ligger den i ressources i roden
 
@@ -17,7 +16,7 @@ public class MovieRepository { //klasser under repository kaldes noget med repos
 
   private List<Movie> movies; //har man ikke lavet movie klasse endnu kan man autogenerere og ligge den under models
 
-  public MovieRepository(){ //lav altid konstruktør
+  public MovieRepositoryCSV(){ //lav altid konstruktør
     this.movies = new ArrayList<>(); //fordel ved linkedlist - skal ikke ændre hver index
     generateMovieList(); //autogenerer metode ud fra metodenavn, men den gør metoden private
   }
